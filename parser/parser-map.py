@@ -25,11 +25,30 @@ class ParseYandexMap:
             'user-data-dir=/Users/ilapopov/Library/Application Support/Google/Chrome/Default')
         # self.options_chrome.add_argument('--headless')
 
+    def _put_find(self, browser):
+        """
+        В поле поиска вставляем запрос и нажимаем найти
+        :return:
+        """
+        element = browser.find_element(By.CLASS_NAME, "body")
+        element = element.find_element(By.CLASS_NAME, "app")
+        element = element.find_element(By.CSS_SELECTOR, "div.header-view__main-layout")
+        element = element.find_element(By.TAG_NAME, "input")
+        element.send_keys(self.search_query)  # запись в строке поиска
+
+        element = browser.find_element(By.CLASS_NAME, "body")
+        element = element.find_element(By.CLASS_NAME, "app")
+        element = element.find_element(By.CSS_SELECTOR, "div.header-view__main-layout")
+        element = element.find_element(By.CSS_SELECTOR, "div.small-search-form-view__button")
+        element = element.find_element(By.TAG_NAME, "button")
+        element.click()
+
     def _parser(self):
         with webdriver.Chrome(options=self.options_chrome) as browser:
             browser.get(self.url)
+            self._put_find(browser=browser)
 
-            time.sleep(100)
+            time.sleep(10)
 
     def __call__(self, *args, **kwargs):
         self._parser()
