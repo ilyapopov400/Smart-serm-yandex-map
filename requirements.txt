@@ -41,3 +41,8 @@ webdriver-manager==4.0.1
 webencodings==0.5.1
 wsproto==1.2.0
 yarl==1.9.4
+asgiref==3.7.2
+Django==4.2.7
+pillow==10.2.0
+sqlparse==0.4.4
+typing_extensions==4.10.0
