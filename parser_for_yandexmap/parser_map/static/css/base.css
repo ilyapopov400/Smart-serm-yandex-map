@@ -1,0 +1,27 @@
+html {
+    background-color: cyan;
+}
+
+.card-bird {
+    background-color: cadetblue;
+    margin: 10px;
+    padding: 10px;
+}
+
+.delete-card {
+    background-color: fuchsia;
+    margin: 10px;
+    padding: 10px;
+}
+
+.header {
+    background-color: antiquewhite;
+    margin: 10px;
+    padding: 10px;
+}
+
+.navbar {
+    background-color: mediumslateblue;
+    margin: 10px;
+    padding: 10px;
+}
