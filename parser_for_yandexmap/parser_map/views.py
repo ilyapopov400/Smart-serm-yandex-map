@@ -3,6 +3,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from . import forms
+from . import parser_map
 
 
 # Create your views here.
@@ -26,6 +27,10 @@ class SearchQuery(FormView):
         result = super(SearchQuery, self).post(request, *args, **kwargs)
         text_of_find = request.POST.get("find")
         print(text_of_find)  # получили поисковый запрос, который надо передать на парсер
+        address = "address"
+        phone = "phone"
+        res = parser_map.ParseYandexMap(search_query=text_of_find)()
+        print(res)
         return result
 
 
