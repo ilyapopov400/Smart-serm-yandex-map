@@ -7,6 +7,14 @@
 {% block content %}
 <div>
     <h1>Страница поискового запроса</h1>
+    <form method="POST">
+    {% csrf_token %}
+        {{ form.as_p }}
+        <div>
+                <button type="submit" value="Save">отправить запрос</button> |
+                <button type="reset">очистить форму</button>
+            </div>
+    </form>
 
 </div>
 {% endblock %}
