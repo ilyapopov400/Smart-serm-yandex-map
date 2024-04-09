@@ -1,5 +1,6 @@
 {% extends 'parser_map/base.html'  %}
 {% load static %}
+{% load cache %}
 
 
 {% block title %}Smart-serm{% endblock %}
@@ -7,6 +8,25 @@
 {% block content %}
 <div>
     <h1>Страница ответа на поисковый запрос</h1>
+    {% cache 1500 result_date %}
+
+    <h3>данные по запросу</h3>
+    <div>
+        {% for answer in result_date %}
+        <ul>
+            <div class="card-answer">
+                <li>{{ answer.address }}</li>
+                    {% if answer.phone %}
+                    <li>{{ answer.phone }}</li>
+                    {% else %}
+                    <li>нет данных</li>
+                {% endif %}
+
+            </div>
+        </ul>
+        {% endfor %}
+    </div>
+    {% endcache %}
 
 </div>
 {% endblock %}
