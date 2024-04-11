@@ -86,21 +86,41 @@ class ParseYandexMap:
         time.sleep(3)
         return address, phone
 
+    @staticmethod
+    def _get_if_one_element_and_get_address_phone(browser):
+        """
+        если после поикового запроса только один элемент, без выпадающего списка
+        :param browser:
+        :param element:
+        :return:
+        """
+        element = browser.find_element(By.CLASS_NAME, "body")
+        element = element.find_element(By.CLASS_NAME, "app")
+        address = element.find_element(By.CSS_SELECTOR, "div.business-contacts-view__address-link").text
+        phone = element.find_element(By.CSS_SELECTOR, "div.card-phones-view__placeholder").text
+        result = {
+            "address": address,
+            "phone": phone
+        }
+        return result
+
     def _parser(self):
         with webdriver.Chrome(options=self.options_chrome) as browser:
             result = list()
             browser.maximize_window()  # на весь экран
             browser.get(self.url)
             self._put_find(browser=browser)
-            time.sleep(10)
-            elements = self._drop_down_windows(browser=browser)
-            for element in elements:
-                address, phone = self._touch_element_and_get_address_phone(browser=browser, element=element)
-                time.sleep(3)
-                result.append({
-                    "address": address,
-                    "phone": phone
-                })
+            time.sleep(3)
+            if elements := self._drop_down_windows(browser=browser):
+                for element in elements:
+                    address, phone = self._touch_element_and_get_address_phone(browser=browser, element=element)
+                    time.sleep(4)
+                    result.append({
+                        "address": address,
+                        "phone": phone
+                    })
+            else:
+                result.append(self._get_if_one_element_and_get_address_phone(browser))
 
             return result
 
@@ -109,7 +129,9 @@ class ParseYandexMap:
 
 
 def mane():
-    result = ParseYandexMap(search_query="М.видео")()
+    search_query = "М.видео"
+    search_query = "титаник"
+    result = ParseYandexMap(search_query=search_query)()
     ic(result)
 
 

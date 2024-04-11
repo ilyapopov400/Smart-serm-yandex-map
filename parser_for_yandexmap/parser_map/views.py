@@ -31,13 +31,17 @@ class SearchQuery(FormView):
         result = super(SearchQuery, self).post(request, *args, **kwargs)
         text_of_find = request.POST.get("find")  # получили поисковый запрос, который надо передать на парсер
 
-        flag = True
-        while flag:
+        flag = 1
+        result_date = [{
+            "address": "не установленно",
+            "phone": "не установленно"
+        }, ]
+        while bool(flag) and flag < 3:
             try:
                 result_date = parser_map.ParseYandexMap(search_query=text_of_find)()  # ответ парсера на запрос
                 flag = False
             except TimeoutException:
-                pass
+                flag += 1
 
         # result_date = test_date.data
         # print(result_date)
